@@ -1,4 +1,12 @@
-﻿
+﻿<div class="mb-2">
+    <button id="addPartnerBtn" type="button"
+            get-url="@Url.Action("Create")"
+            result-target-id="#mainModal div.modal-body" call-after-success-close="serversTableRefresh"
+            class="btn btn-primary" data-toggle="modal" data-target="#mainModal">
+        +
+    </button>
+</div>
+
 
 <table id="pertnersTable" width="100%" class="table row-border" style="width:100%">
         <thead>
@@ -31,6 +39,14 @@
                     ajax: '@Url.Action("GetPartnerRows")'
                 }
             );
+
+            $("body").on("click", "#addPartnerBtn",
+                function () {
+                    $.get(
+                        "@Url.Action("Create")",
+                        function (data) { $("#mainModalBody").html(data) }
+                    );
+            });
 
         });
 

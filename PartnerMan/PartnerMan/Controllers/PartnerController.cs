@@ -12,6 +12,7 @@ using PartnerMan.Models;
 using PartnerMan.PartnerMan.DataTables;
 using System.Linq.Dynamic;
 using System.Linq.Dynamic.Core;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace PartnerMan.Controllers
 {
@@ -35,6 +36,7 @@ namespace PartnerMan.Controllers
         {
             try
             {
+                // A model binder nem oldotta fel a column + order property-ket, ezért a workaround.
                 string orderCol = Request.Query["order[0][column]"].ToString();
                 string orderDirAsc = Request.Query["order[0][dir]"].ToString();
                 string orderColName = Request.Query[$"columns[{orderCol}][data]"].ToString();
@@ -52,7 +54,8 @@ namespace PartnerMan.Controllers
                         .Take(param.length)
                         .AsNoTracking();
 
-                
+                //total = tmp_e.Count();
+
 
                 return Json(new
                 {
@@ -89,23 +92,27 @@ namespace PartnerMan.Controllers
         // GET: PartnerModels/Create
         public IActionResult Create()
         {
-            return View();
+            return PartialView();
         }
 
-        // POST: PartnerModels/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name")] PartnerModel partnerModel)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(partnerModel);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(partnerModel);
+                    await _context.SaveChangesAsync();
+                    return Ok();
+                }
             }
-            return View(partnerModel);
+            catch (Exception)
+            {
+
+            }
+            return PartialView(partnerModel);
         }
 
         // GET: PartnerModels/Edit/5
