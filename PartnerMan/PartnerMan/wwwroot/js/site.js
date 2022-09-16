@@ -32,9 +32,6 @@ function callAjax(action, form) {
                     $("#mainModal").modal("hide");
                 }
             }
-
-
-
         })
         .fail(function (err) {
             console.log("error:" + err);

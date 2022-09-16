@@ -36,7 +36,8 @@
                     ],
                     processing: true,
                     serverSide: true,
-                    ajax: '@Url.Action("GetPartnerRows")'
+                    ajax: '@Url.Action("GetPartnerRows")',
+                    rowId: 'id'
                 }
             );
 
@@ -53,11 +54,27 @@
             });
 
             $("body").on("click", "#addAddressRow",
-                function () {
-                    $.get(
-                        "@Url.Action("CreateAddressRow")",
-                        function (data) { $("#addressesContainer").append(data) }
-                    );
+                function (e) {
+                    var form = $(this).closest(".modal").find("form");
+                    var action = "@Url.Action("AddNewAddress")";
+                    var fn = callAjax(action, form);
+
+                    fn.done(function (data) {
+                        $("#mainModalBody").html(data);
+                    });
+
+                }
+            );
+
+            $('#pertnersTable').on('click', 'tbody', function (event) {
+                $("#mainModalBody").html("Betöltés...")
+                $("#mainModal").modal("show");
+                var p = $(event.target).closest('tr')[0].id;
+                $.get("@Url.Action("Edit")?id=" + p, 
+                    function (data) {
+                        $("#mainModalBody").html(data);
+                });
+                  
             });
         });
 

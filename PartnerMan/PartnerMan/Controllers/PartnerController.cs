@@ -117,9 +117,11 @@ namespace PartnerMan.Controllers
             return PartialView(partnerModel);
         }
 
-        public IActionResult CreateAddressRow()
+        [HttpPost]
+        public IActionResult AddNewAddress(PartnerModel partnerModel)
         {
-            return PartialView(new AddressModel());
+            partnerModel.Addresses.Add(new AddressModel());
+            return PartialView("Create",partnerModel);
         }
 
         // GET: PartnerModels/Edit/5
@@ -130,17 +132,18 @@ namespace PartnerMan.Controllers
                 return NotFound();
             }
 
-            var partnerModel = await _context.Partners.FindAsync(id);
+            var partnerModel = await _context
+                .Partners
+                .Include(m => m.Addresses)
+                .SingleAsync(p => p.Id == id);
+
             if (partnerModel == null)
             {
                 return NotFound();
             }
-            return View(partnerModel);
+            return PartialView(partnerModel);
         }
 
-        // POST: PartnerModels/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] PartnerModel partnerModel)
