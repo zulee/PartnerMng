@@ -47,7 +47,7 @@ namespace PartnerMan.Controllers
 
                 var tmp_e = _context
                         .Partners
-                        .AsQueryable().OrderBy(orderColName, orderDirAsc)
+                        .AsQueryable().OrderBy($"{orderColName} {orderDirAsc}")
                         .Skip(param.start)
                         .Take(param.length)
                         .AsNoTracking();
