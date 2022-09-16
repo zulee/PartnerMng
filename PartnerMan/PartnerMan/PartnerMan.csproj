@@ -7,13 +7,36 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\lib\datatables\js\dataTables.bootstrap.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.bootstrap.min.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.bootstrap4.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.bootstrap4.min.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.dataTables.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.dataTables.min.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.foundation.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.foundation.min.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.jqueryui.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.jqueryui.min.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.material.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.material.min.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.semanticui.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.semanticui.min.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.uikit.js" />
+    <None Include="wwwroot\lib\datatables\js\dataTables.uikit.min.js" />
+    <None Include="wwwroot\lib\datatables\js\jquery.dataTables.js" />
+    <None Include="wwwroot\lib\datatables\js\jquery.dataTables.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.17" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.17" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.17" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.17" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.17" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.17" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.20" />
   </ItemGroup>
 
 </Project>

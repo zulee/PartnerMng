@@ -2,14 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using PartnerMan.Data;
 using PartnerMan.Models;
+using PartnerMan.PartnerMan.DataTables;
+using System.Linq.Dynamic;
+using System.Linq.Dynamic.Core;
 
 namespace PartnerMan.Controllers
 {
+    [Authorize]
     public class PartnerController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -23,6 +29,43 @@ namespace PartnerMan.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Partners.ToListAsync());
+        }
+
+        public  IActionResult GetPartnerRows(JQDTParams param)
+        {
+            try
+            {
+                string orderCol = Request.Query["order[0][column]"].ToString();
+                string orderDirAsc = Request.Query["order[0][dir]"].ToString();
+                string orderColName = Request.Query[$"columns[{orderCol}][data]"].ToString();
+
+
+                int total;
+                List<PartnerModel> bejelentesek = new ();
+
+                total = _context.Partners.Count();
+
+                var tmp_e = _context
+                        .Partners
+                        .AsQueryable().OrderBy(orderColName, orderDirAsc)
+                        .Skip(param.start)
+                        .Take(param.length)
+                        .AsNoTracking();
+
+                
+
+                return Json(new
+                {
+                    data = tmp_e.ToArray(),
+                    recordsTotal = total,
+                    recordsFiltered = total,
+                    draw = param.draw
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(null);
+            }
         }
 
         // GET: PartnerModels/Details/5

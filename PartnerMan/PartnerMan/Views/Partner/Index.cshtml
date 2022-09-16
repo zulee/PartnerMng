@@ -1,35 +1,38 @@
-﻿@model IEnumerable<PartnerMan.Models.PartnerModel>
+﻿
 
-@{
-    ViewData["Title"] = "Index";
+<table id="pertnersTable" width="100%" class="table row-border" style="width:100%">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Név</th>
+            </tr>
+        </thead>
+        <tbody>
+         </tbody>
+    </table>
+
+@section Scripts
+    {
+    <script>
+        $(function () {
+
+            var t = $("#pertnersTable").DataTable(
+                {
+                    columns: [
+                        {
+                            data: "id"
+                        },
+                        {
+                            data: "name"
+                        }
+                    ],
+                    processing: true,
+                    serverSide: true,
+                    ajax: '@Url.Action("GetPartnerRows")'
+                }
+            );
+
+        });
+
+    </script>
 }
-
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
