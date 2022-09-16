@@ -92,12 +92,14 @@ namespace PartnerMan.Controllers
         // GET: PartnerModels/Create
         public IActionResult Create()
         {
-            return PartialView();
+            var model = new PartnerModel();
+            model.Addresses.Add(new AddressModel());
+            return PartialView(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] PartnerModel partnerModel)
+        public async Task<IActionResult> Create(PartnerModel partnerModel)
         {
             try
             {
@@ -113,6 +115,11 @@ namespace PartnerMan.Controllers
 
             }
             return PartialView(partnerModel);
+        }
+
+        public IActionResult CreateAddressRow()
+        {
+            return PartialView(new AddressModel());
         }
 
         // GET: PartnerModels/Edit/5

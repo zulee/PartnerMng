@@ -42,13 +42,26 @@
 
             $("body").on("click", "#addPartnerBtn",
                 function () {
+                    
                     $.get(
                         "@Url.Action("Create")",
-                        function (data) { $("#mainModalBody").html(data) }
+                        function (data) {
+                            $("#mainModalBody").html("");
+                            $("#mainModalBody").html(data) 
+                        }
                     );
             });
 
+            $("body").on("click", "#addAddressRow",
+                function () {
+                    $.get(
+                        "@Url.Action("CreateAddressRow")",
+                        function (data) { $("#addressesContainer").append(data) }
+                    );
+            });
         });
 
     </script>
 }
+
+

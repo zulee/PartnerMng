@@ -1,0 +1,22 @@
+﻿@model AddressModel
+gggggggggggggggggggggggggg
+<div class="row">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="col-4">
+        <label class="control-label">Irányítószám</label>
+        <input asp-for="PostalCode" class="form-control" />
+        <span asp-validation-for="PostalCode" class="text-danger"></span>
+    </div>
+    <div class="col-8">
+        <label class="control-label">Város</label>
+        <input asp-for="City" class="form-control" />
+        <span asp-validation-for="City" class="text-danger"></span>
+    </div>
+    <div class="col-12">
+        <label class="control-label">Utca, házszám</label>
+        <input asp-for="Address" class="form-control" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+
+</div>

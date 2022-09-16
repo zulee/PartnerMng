@@ -1,0 +1,19 @@
+﻿@model AddressModel
+iiiiiiiiiiiiii
+<div class="row">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="col-4">
+        <label class="control-label">Irányítószám</label>
+        @Html.DisplayNameFor(model => model.PostalCode)
+    </div>
+    <div class="col-8">
+        <label class="control-label">Város</label>
+        @Html.DisplayNameFor(model => model.City)
+    </div>
+    <div class="col-12">
+        <label class="control-label">Utca, házszám</label>
+        @Html.DisplayNameFor(model => model.Address)
+    </div>
+
+</div>
