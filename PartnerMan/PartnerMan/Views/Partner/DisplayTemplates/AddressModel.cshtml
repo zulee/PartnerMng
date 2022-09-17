@@ -4,19 +4,19 @@
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
     <div class="col-2">
-        <label class="control-label">Országkód</label>
+        <label class="control-label font-weight-bold">Országkód:</label>
         @Html.DisplayFor(model => model.CountryCode)
     </div>   
     <div class="col-2">
-        <label class="control-label">Irányítószám</label>
+        <label class="control-label font-weight-bold">Irányítószám:</label>
         @Html.DisplayFor(model => model.PostalCode)
     </div>
     <div class="col-4">
-        <label class="control-label">Város</label>
+        <label class="control-label font-weight-bold">Város:</label>
         @Html.DisplayFor(model => model.City)
     </div>
     <div class="col-4">
-        <label class="control-label">Utca, házszám</label>
+        <label class="control-label font-weight-bold">Utca, házszám:</label>
         @Html.DisplayFor(model => model.Address)
     </div>
 

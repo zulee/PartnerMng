@@ -78,3 +78,7 @@ body {
 .table tbody tr:hover{
     background-color:  #52525259;
 }
+
+.modal-header, .modal-footer {
+    background-color: #52525259
+}

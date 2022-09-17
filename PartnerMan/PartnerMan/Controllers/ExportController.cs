@@ -7,6 +7,7 @@ using PartnerMan.Data;
 using PartnerMan.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 
@@ -32,7 +33,21 @@ namespace PartnerMan.Controllers
         {
             try
             {
+                if (file.Length > 100000 )
+                {
+                    throw new ArgumentOutOfRangeException("File", "A fájl mérete túl nagy!");
+                }
+                string content = string.Empty;
+                using (var sr = new StreamReader(file.OpenReadStream()))
+                {
+                    content = sr.ReadToEnd();
+                }
+                
+                List<PartnerModel> partnerList =
+                    JsonConvert.DeserializeObject<List<PartnerModel>>(content);
 
+                _context.Partners.AddRange(partnerList);
+                _context.SaveChanges();
             }
             catch (Exception)
             {
@@ -66,8 +81,6 @@ namespace PartnerMan.Controllers
 
             var b = System.Text.Encoding.UTF8.GetBytes(output);
             return File(b, "text/json", "Export.json");
-            //Product deserializedProduct = JsonConvert.DeserializeObject<Product>(output);
-            return View();
         }
     }
 }

@@ -4,15 +4,25 @@
 <ul>
     <li>Formátum: JSON</li>
     <li>Kódolás: UTF8</li>
+    <li>Fájlméret: 100 kB</li>
 </ul>
-
-<form asp-action="Import">
+<form enctype="multipart/form-data" method="post" asp-action="Import">
     <div class="form-group">
-        <input type="file" name="partnerImpFile" class="form-control-file" />
+        <input type="file" name="file" class="form-control-file" />
+    </div>
+
+    <div class="form-group">
+        <a asp-controller="Partner" asp-action="Index" class="btn btn-outline-dark">Vissza</a>
+        <input type="submit" value="Feltöltés" class="btn btn-primary" />
+    </div>
+</form>
+@*<form asp-action="Import">
+    <div class="form-group">
+        <input type="file" name="file" class="form-control-file" />
     </div>
 
     <div class="form-group">
         <a asp-controller="Partner" asp-action="Index" class="btn btn-outline-dark" >Vissza</a>
         <input type="submit" value="Feltöltés" class="btn btn-primary" />
     </div>
-</form>
+</form>*@
