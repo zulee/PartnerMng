@@ -55,9 +55,23 @@ namespace PartnerMan.Controllers
 
                 total = _context.Partners.Count();
 
+                string search = Request.Query["search[value]"].ToString();
+
                 var tmp_e = _context
                         .Partners
-                        .AsQueryable().OrderBy($"{orderColName} {orderDirAsc}")
+                        .Include(a =>a.Addresses)
+                        .AsQueryable()
+                        .Where(p=>
+                            p.FirstName.Contains(search) ||
+                            p.MiddleName.Contains(search) ||
+                            p.LastName.Contains(search) ||
+                            p.Addresses.Any(
+                                a=>
+                                a.PostalCode.Contains(search) ||
+                                a.City.Contains(search) ||
+                                a.Address.Contains(search) )
+                        )
+                        .OrderBy($"{orderColName} {orderDirAsc}")
                         .Skip(param.start)
                         .Take(param.length)
                         .AsNoTracking();

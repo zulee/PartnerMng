@@ -16,6 +16,7 @@
             <tr>
                 <th>ID</th>
                 <th>Név</th>
+                <th>Címek</th>
                 <th></th>
             </tr>
         </thead>
@@ -36,6 +37,19 @@
                         },
                         {
                             data: "displayName"
+                        },
+                        {
+                            data: "addresses",
+                            sortable: false,
+                            render: function (data) {
+                                var s = "<ol>";
+                                data.forEach((e) => {
+                                    s += `<li>${e.postalCode} ${e.city}, ${e.address} (${e.countryCode}) </li>`;
+                                });
+                                s += "</li>"
+                                return s;
+                            }
+
                         },
                         {
                             data: null,
