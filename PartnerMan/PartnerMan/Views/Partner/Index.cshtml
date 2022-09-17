@@ -7,7 +7,7 @@
     </button>
 
     <button class="btn btn-outline-dark float-right">Import</button>
-    <button class="btn btn-outline-dark float-right">Export</button>
+    <a asp-controller="Export" asp-action="Export" class="btn btn-outline-dark float-right" >Export mind</a>
 </div>
 
 
@@ -69,13 +69,13 @@
             );
 
             $("body").on("click", "#addPartnerBtn",
-                function () {
-                    
+                function () {                   
                     $.get(
                         "@Url.Action("Create")",
                         function (data) {
                             $("#mainModalBody").html("");
-                            $("#mainModalBody").html(data) 
+                            $("#mainModalBody").html(data);
+                            $("#singlePartnerExport").hide();
                         }
                     );
             });
@@ -108,28 +108,38 @@
                 $("#mainModalBody").html("Betöltés...")
                 $("#mainModal").modal("show");
                 var p = $(event.target).closest('tr')[0].id;
+                $("#singlePartnerExport").show();
+                $("#singlePartnerExport").attr("partnerid", p);
+
                 $.get("@Url.Action("Edit")?id=" + p, 
                     function (data) {
                         $("#mainModalBody").html(data);
                 });                 
             });
 
-
-
-        });
-
-            $('#pertnersTable').on('click', 'tbody button', function (event) {
-             alert("DEL");
+            $('#pertnersTable').on('click', 'tbody', function (event) {
+                if ($(event.target).hasClass('deleteBtn')) {
+                    return;
+                }
                 $("#mainModalBody").html("Betöltés...")
-                $("#call-after-success-close").val("windows.location.reload()")
-
                 $("#mainModal").modal("show");
                 var p = $(event.target).closest('tr')[0].id;
-                $.get("@Url.Action("Delete")/" + p,
+                $("#singlePartnerExport").show();
+                $("#singlePartnerExport").attr("partnerid", p);
+
+                $.get("@Url.Action("Edit")?id=" + p,
                     function (data) {
                         $("#mainModalBody").html(data);
                     });
             });
+
+        });
+
+        $('#singlePartnerExport').on('click', function (event) {
+            event.preventDefault();
+            var p = $(event.target).attr("partnerid");
+            window.location = `@Url.Action("Export","Export")/${p}`;
+        });
     </script>
 }
 
