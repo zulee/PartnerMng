@@ -71,29 +71,12 @@ namespace PartnerMan.Controllers
             }
         }
 
-        // GET: PartnerModels/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var partnerModel = await _context.Partners
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (partnerModel == null)
-            {
-                return NotFound();
-            }
-
-            return View(partnerModel);
-        }
 
         // GET: PartnerModels/Create
         public IActionResult Create()
         {
             var model = new PartnerModel();
-            model.Addresses.Add(new AddressModel());
+            //model.Addresses.Add(new AddressModel());
             return PartialView(model);
         }
 
@@ -153,7 +136,7 @@ namespace PartnerMan.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Addresses")] PartnerModel partnerModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,FirstName,MiddleName,LastName,Addresses")] PartnerModel partnerModel)
         {
             if (id != partnerModel.Id)
             {

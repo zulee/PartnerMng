@@ -18,8 +18,28 @@ namespace PartnerMan.Models
         [DatabaseGenerated( DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "A név megadása kötelező!")]
-        public string Name { get; set; }
+        [StringLength(10)]
+        public string Title { get; set; }
+
+        [StringLength(100)]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "A vezetéknév megadása kötelező!")]
+        public string LastName { get; set; }
+
+        [StringLength(100)]
+        public string MiddleName { get; set; }
+
+        [StringLength(100)]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "A keresztnév megadása kötelező!")]
+        public string FirstName { get; set; }
+
+        [NotMapped]
+        public string DisplayName
+        {
+            get { return $"{Title} {LastName} {MiddleName} {FirstName}".Replace("  "," "); }
+        }        
+
+        [StringLength(500)]
+        public string Comment { get; set; }
 
         public List<AddressModel> Addresses { get; set; }
     }
