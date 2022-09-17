@@ -1,7 +1,8 @@
 ﻿@model AddressModel
 
-<div class="row">
+<div class="row border m-2 p-2">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input asp-for="Id" type="hidden" />
     <div class="col-3">
         <label class="control-label">Országkód</label>
         <input asp-for="CountryCode" class="form-control" />

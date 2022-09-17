@@ -5,6 +5,9 @@
             class="btn btn-primary" data-toggle="modal" data-target="#mainModal">
         +
     </button>
+
+    <button class="btn btn-outline-dark float-right">Import</button>
+    <button class="btn btn-outline-dark float-right">Export</button>
 </div>
 
 
@@ -53,16 +56,24 @@
                     );
             });
 
-            $("body").on("click", "#addAddressRow",
+            $("body").on("click", "#addAddressRowCreate",
                 function (e) {
                     var form = $(this).closest(".modal").find("form");
-                    var action = "@Url.Action("AddNewAddress")";
+                    var action = "@Url.Action("AddNewAddress")?isEdit=0";
                     var fn = callAjax(action, form);
-
                     fn.done(function (data) {
                         $("#mainModalBody").html(data);
                     });
-
+                }
+            );
+            $("body").on("click", "#addAddressRowEdit",
+                function (e) {
+                    var form = $(this).closest(".modal").find("form");
+                    var action = "@Url.Action("AddNewAddress")?isEdit=1";
+                    var fn = callAjax(action, form);
+                    fn.done(function (data) {
+                        $("#mainModalBody").html(data);
+                    });
                 }
             );
 

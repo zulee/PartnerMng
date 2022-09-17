@@ -118,10 +118,17 @@ namespace PartnerMan.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddNewAddress(PartnerModel partnerModel)
+        public IActionResult AddNewAddress(PartnerModel partnerModel,int isEdit = 1)
         {
             partnerModel.Addresses.Add(new AddressModel());
-            return PartialView("Create",partnerModel);
+            if (isEdit == 1)
+            {
+                return PartialView("Edit",partnerModel);
+            }
+            else
+            {
+                return PartialView("Create",partnerModel);
+            }
         }
 
         // GET: PartnerModels/Edit/5
@@ -146,7 +153,7 @@ namespace PartnerMan.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] PartnerModel partnerModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Addresses")] PartnerModel partnerModel)
         {
             if (id != partnerModel.Id)
             {
@@ -158,7 +165,8 @@ namespace PartnerMan.Controllers
                 try
                 {
                     _context.Update(partnerModel);
-                    await _context.SaveChangesAsync();
+                    await _context.SaveChangesAsync(); 
+                    return Ok();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -171,9 +179,9 @@ namespace PartnerMan.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+
             }
-            return View(partnerModel);
+            return PartialView(partnerModel);
         }
 
         // GET: PartnerModels/Delete/5
