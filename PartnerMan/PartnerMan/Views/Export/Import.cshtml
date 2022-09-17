@@ -1,0 +1,18 @@
+﻿<H3>
+    Töltsön fel egy importálandó állományt.
+</H3>
+<ul>
+    <li>Formátum: JSON</li>
+    <li>Kódolás: UTF8</li>
+</ul>
+
+<form asp-action="Import">
+    <div class="form-group">
+        <input type="file" name="partnerImpFile" class="form-control-file" />
+    </div>
+
+    <div class="form-group">
+        <a asp-controller="Partner" asp-action="Index" class="btn btn-outline-dark" >Vissza</a>
+        <input type="submit" value="Feltöltés" class="btn btn-primary" />
+    </div>
+</form>

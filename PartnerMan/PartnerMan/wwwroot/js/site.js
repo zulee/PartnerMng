@@ -1,4 +1,10 @@
-﻿
+﻿$.extend(true, $.fn.dataTable.defaults, {
+    language: {
+        url: "/lib/DataTables/Hungarian.json"
+    }
+});
+
+
 $("#mainModalSubmit").on("click",
     function (e) {
         var form = $(this).closest(".modal").find("form");

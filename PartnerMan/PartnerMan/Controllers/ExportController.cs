@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -20,6 +21,24 @@ namespace PartnerMan.Controllers
         public ExportController(ApplicationDbContext context)
         {
             _context = context;
+        }
+        public IActionResult Import()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Import(IFormFile file)
+        {
+            try
+            {
+
+            }
+            catch (Exception)
+            {
+
+            }
+            return View(file);
         }
 
         public IActionResult Export(int? Id)
