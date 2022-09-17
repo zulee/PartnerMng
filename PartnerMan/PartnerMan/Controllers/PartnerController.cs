@@ -41,6 +41,14 @@ namespace PartnerMan.Controllers
                 string orderDirAsc = Request.Query["order[0][dir]"].ToString();
                 string orderColName = Request.Query[$"columns[{orderCol}][data]"].ToString();
 
+                switch (orderColName)
+                {
+                    case "displayName":
+                        orderColName = "LastName";
+                        break;  
+                    default:
+                        break;
+                }
 
                 int total;
                 List<PartnerModel> bejelentesek = new ();
@@ -176,13 +184,14 @@ namespace PartnerMan.Controllers
             }
 
             var partnerModel = await _context.Partners
+                .Include(p => p.Addresses)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (partnerModel == null)
             {
                 return NotFound();
             }
 
-            return View(partnerModel);
+            return PartialView(partnerModel);
         }
 
         // POST: PartnerModels/Delete/5
@@ -190,10 +199,20 @@ namespace PartnerMan.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var partnerModel = await _context.Partners.FindAsync(id);
-            _context.Partners.Remove(partnerModel);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                var partnerModel = await _context
+                    .Partners
+                    .Include(p=>p.Addresses)
+                    .SingleAsync(p => p.Id == id);
+                _context.Partners.Remove(partnerModel);
+                await _context.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return new ContentResult() { Content = "Hiba történt az elem törlése közben!" };
+            }
         }
 
         private bool PartnerModelExists(int id)

@@ -16,6 +16,7 @@
             <tr>
                 <th>ID</th>
                 <th>Név</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -35,6 +36,15 @@
                         },
                         {
                             data: "displayName"
+                        },
+                        {
+                            data: null,
+                            width: "30px",
+                            class: "editor",
+                            sortable: false,
+                            render: function() { 
+                                return "<button class='btn btn-danger deleteBtn'>X</button>";
+                            }
                         }
                     ],
                     processing: true,
@@ -78,17 +88,34 @@
             );
 
             $('#pertnersTable').on('click', 'tbody', function (event) {
+                if ($(event.target).hasClass('deleteBtn')) {
+                    return;
+                }
                 $("#mainModalBody").html("Betöltés...")
                 $("#mainModal").modal("show");
                 var p = $(event.target).closest('tr')[0].id;
                 $.get("@Url.Action("Edit")?id=" + p, 
                     function (data) {
                         $("#mainModalBody").html(data);
-                });
-                  
+                });                 
             });
+
+
+
         });
 
+            $('#pertnersTable').on('click', 'tbody button', function (event) {
+             alert("DEL");
+                $("#mainModalBody").html("Betöltés...")
+                $("#call-after-success-close").val("windows.location.reload()")
+
+                $("#mainModal").modal("show");
+                var p = $(event.target).closest('tr')[0].id;
+                $.get("@Url.Action("Delete")/" + p,
+                    function (data) {
+                        $("#mainModalBody").html(data);
+                    });
+            });
     </script>
 }
 
