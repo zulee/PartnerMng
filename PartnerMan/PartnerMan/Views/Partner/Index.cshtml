@@ -101,6 +101,17 @@
                 }
             );
 
+            //$("body").on("click", "a.deleteButton",
+            //    function (e) {
+            //        var form = $(this).closest(".modal").find("form");
+            //        var action = "@Url.Action("RemoveAddress")?id=1&isEdit=1";
+            //        var fn = callAjax(action, form);
+            //        fn.done(function (data) {
+            //            $("#mainModalBody").html(data);
+            //        });
+            //    }
+            //);
+
             $('#pertnersTable').on('click', 'tbody', function (event) {
                 if ($(event.target).hasClass('deleteBtn')) {
                     return;
@@ -136,6 +147,23 @@
             var p = $(event.target).attr("partnerid");
             window.location = `@Url.Action("Export","Export")/${p}`;
         });
+
+        $('body').on('click', 'a.deleteButton', function (event) {
+            event.preventDefault();
+            $(event.target).closest('div.row').remove();
+            var index = 0;
+            $('#addressesContainer div.row').each(function () {
+                var idprefix = "Addresses_" + index;
+                var nameprefix = "Addresses[" + index + "]";
+                $(this).find("input").each(function () {
+                    this.id = this.id.replace(/Addresses_\d+/, idprefix);
+                    this.name = this.name.replace(/Addresses\[\d+\]/, nameprefix);
+                });
+               index++;
+            });
+
+        });
+
     </script>
 }
 

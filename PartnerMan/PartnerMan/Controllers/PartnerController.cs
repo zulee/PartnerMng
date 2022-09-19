@@ -13,6 +13,7 @@ using PartnerMan.PartnerMan.DataTables;
 using System.Linq.Dynamic;
 using System.Linq.Dynamic.Core;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using PartnerMan.Data.Migrations;
 
 namespace PartnerMan.Controllers
 {
@@ -158,7 +159,7 @@ namespace PartnerMan.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,FirstName,MiddleName,LastName,Addresses")] PartnerModel partnerModel)
+        public async Task<IActionResult> Edit(int id, PartnerModel partnerModel)
         {
             if (id != partnerModel.Id)
             {
@@ -169,8 +170,22 @@ namespace PartnerMan.Controllers
             {
                 try
                 {
-                    _context.Update(partnerModel);
-                    await _context.SaveChangesAsync(); 
+                    var partner = _context.Partners
+                        .Include(p => p.Addresses)
+                        .Single(p => p.Id == id);
+
+                    partner.Title = partnerModel.Title;
+                    partner.Comment = partnerModel.Comment;
+                    partner.LastName = partnerModel.LastName;
+                    partner.FirstName = partnerModel.FirstName;
+                    partner.MiddleName = partnerModel.MiddleName;
+
+                    foreach (AddressModel address in partner.Addresses)
+                    {
+                        _context.Entry(address).State = EntityState.Deleted;
+                    }
+                    partner.Addresses.AddRange(partnerModel.Addresses);
+                    await _context.SaveChangesAsync();
                     return Ok();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -184,7 +199,10 @@ namespace PartnerMan.Controllers
                         throw;
                     }
                 }
+                catch (Exception ex)
+                {
 
+                }
             }
             return PartialView(partnerModel);
         }

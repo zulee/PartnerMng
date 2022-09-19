@@ -249,7 +249,7 @@ namespace PartnerMan.Data.Migrations
 
                     b.HasIndex("PartnerModelId");
 
-                    b.ToTable("AddressModel");
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("PartnerMan.Models.PartnerModel", b =>
